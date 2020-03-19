@@ -8,6 +8,7 @@ const connection = mysql.createConnection({
   database: 'class19',
 });
 
+//create a query request everytime you connect to SQL. instead of repeating the connection everytine like i did in my H.W
 const execQuery = util.promisify(connection.query.bind(connection));
 
 async function seedDatabase() {
@@ -51,7 +52,7 @@ async function seedDatabase() {
     
     await Promise.all(students.map(student =>
       execQuery('INSERT INTO students SET ?', student)
-    );
+    ));
   } catch (error) {
     console.error(error);
   }
