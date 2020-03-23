@@ -17,12 +17,11 @@ const execQuery = util.promisify(connection.query.bind(connection));
 
 async function seedDatabase() {
     
-    const numOfAuthors = `select count(author) from research_papers as R group by r.paper_title;`;
-    const femaleAuthors = `select count(paper_title) from research_papers as r inner join authors as A on a.author_no=r.author where a.gender='f';`
-    const avgHindex= `select avg(h_index) from authors as a inner join research_papers as r on a.author_no=r.author;`
-    const avgHindexUniversity=`select avg(h_index),university from authors as a inner join research_papers as r on a.author_no=r.author group by a.university;`
-    const numOfResPapersPerUniversity=`select count(r.paper_id),a.university from research_papers as r inner join authors as A on a.author_no=r.author group by a.university;`
-    const minMaxHindex=`select min(a.h_index),max(a.h_index),a.university from authors as a left join research_papers as r on a.author_no=r.author group by a.university;`
+    const numOfAuthors = `select count(AP.author),R.paper_title from authors_and_publications as AP,research_papers as R where AP.paper = R.paper_id GROUP BY AP.paper;`;
+    const femaleAuthors = `select count(AP.paper),A.gender from authors_and_publications as AP,authors as A where AP.author = A.author_no AND A.gender='f';`
+    const avgHindex= `select AVG(A.h_index),A.author_name,A.university from authors as A GROUP BY A.author_name;`
+    const numOfResPapersPerUniversity=`select COUNT(AP.paper),A.university from authors_and_publications as AP, authors as A WHERE AP.author=A.author_no GROUP BY A.university;`
+    const minMaxHindex=`select MIN(A.h_index),MAX(A.h_index),A.university from authors as A GROUP BY A.university;`
 
     connection.connect();
 
@@ -30,7 +29,6 @@ async function seedDatabase() {
         console.log(await execQuery(numOfAuthors));
         console.log(await execQuery(femaleAuthors));
         console.log(await execQuery(avgHindex));
-        console.log(await execQuery(avgHindexUniversity));
         console.log(await execQuery(numOfResPapersPerUniversity));
         console.log(await execQuery(minMaxHindex));
 

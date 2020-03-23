@@ -17,8 +17,8 @@ const execQuery = util.promisify(connection.query.bind(connection));
 
 async function seedDatabase() {
     
-    const authors_collaborators = `select a.author_name, r.contributor from authors as A, research_papers as R where A.author_no=R.author;`;
-    const left_join = `select * from authors as A left join research_papers as r on r.author=a.author_no;`
+    const authors_collaborators = `select a.author_name, ar.contributor from authors as A, authors_and_publications as AR where A.author_no=AR.author;`;
+    const left_join = `select * from authors as A left join authors_and_publications as AR on AR.author=A.author_no LEFT JOIN research_papers as R on R.paper_id=AR.paper;`
 
     connection.connect();
 
