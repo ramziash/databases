@@ -2,16 +2,18 @@ var prompt = require('prompt');
 var mysql      = require('mysql');
 const util = require('util');
 
+//multiplestatements means we can send multiple statements at a time. Always make it false to avoid malicious users.
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'hyfuser',
   password : 'hyfpassword',
-  database : 'class22',
-  multipleStatements: false
+  database : 'company',
+  multipleStatements: true
 });
 
+
 const execQuery = util.promisify(connection.query.bind(connection))
-const input = util.promisify(prompt.get.bind(this))
+const input = util.promisify(prompt.get.bind(this)) //promisify the input
 
 async function queryDatabase() {
 
@@ -23,17 +25,17 @@ async function queryDatabase() {
 
         // 1. Naive way of passing the parameter to the query
         //const select_query = `select * from students WHERE student_number =  ${input_number};`
-        //const select_query = `select * from employees WHERE eid =  ${input_number};`
+        // const select_query = `select * from employees WHERE employee_no =  ${input_number};`
 
         // 2. Escaping the parameter ( replacing the unwanted characters)
         //const select_query = `select * from students WHERE student_number =` + connection.escape(input_number);
         //const select_query = `select * from animal WHERE gender =` + connection.escape(input_number);
-        //const select_query = `select * from employees WHERE eid =` + connection.escape(input_number);
+        // const select_query = `select * from employees WHERE employee_no =` + connection.escape(input_number);
 
         // 3. Using a question mark syntax to do the escaping 
         //const select_query = `select * from students WHERE student_number = ?`
-        //const select_query = `select * from employees WHERE eid = ?`
-        const select_query = `delete from employees WHERE salary > ?`
+        const select_query = `select * from employees WHERE employee_no = ?`
+        //const select_query = `delete from employees WHERE salary > ?`
         //const select_query = `select * from animal WHERE gender = ?`;
 
         connection.connect();

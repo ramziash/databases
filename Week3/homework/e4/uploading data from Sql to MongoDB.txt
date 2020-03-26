@@ -1,0 +1,19 @@
+The process of changing the database. 
+1- exporting from SQL to CSV using the below commands. 
+
+    - SELECT * from city INTO outfile 'secure_file_priv location \\city.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+    - SELECT * from country INTO outfile 'secure_file_priv location \\country.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+
+    - SELECT * from countrylanguage INTO outfile 'secure_file_priv location \\countrylanguage.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+    -(SELECT "ID","name","countrycode","district", "population") UNION (SELECT id, name, countrycode, district, population FROM city) INTO OUTFILE "C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\city.csv" FIELDS ENCLOSED BY'"' TERMINATED BY ',' ESCAPED BY '"' LINES TERMINATED BY '\r\n';
+
+2- create an account in MonogDb Atlas. and connect it. 
+
+    - create a bat file to run mongo on pc. 
+     
+    - to upload the CSV files, the details for running it is in the command line tools on the atlas website. 
+
+    - copy the command, replace the password, database, collection and the file will be uploaded. 

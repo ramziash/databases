@@ -1,0 +1,53 @@
+
+
+Original Table. 
+
+| member_id | member_name   | member_address | dinner_id | dinner_date | venue_code | venue_description | food_code | food_description |
++-----------+---------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+|         1 | Amit          | 325 Max park   | D00001001 | 2020-03-15  | B01        | Grand Ball Room   | C1, C2    | Curry, Cake      |
+|         2 | Ben           | 24 Hudson lane | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | S1, C2    | Soup, Cake       |
+|         3 | Cristina      | 516 6th Ave    | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | S1, C2    | Soup, Cake       |
+|         4 | Dan           | 89 John St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1, T1, M1| Pie, Tea, Mousse |
+|         5 | Ema           | 91 Pixar St    | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1, T1, M1| Pie, Tea, Mousse |
+|         6 | Fatima        | 56 8th Ave     | D00001004 | 2020-03-20  | B04        | Mama's Kitchen    | F1, M1    | Falafal, Mousse  |
+|         7 | Gabor         | 54 Vivaldi St  | D00001005 | 2020-02-20  | B05        | Hungry Hungary    | G1, P2    | Goulash, Pasca   |
+|         8 | Hema          | 9 Peter St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1, T1, M1| Pie, Tea, Mousse |
++-----------+---------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+
+
+Q1: How can you convert the table into 1NF ?
+A1: food_code and food_description data shouldn't be munged together with only one value per column. 
+
+
+Q2: What are the super, candidate, primary keys ?
+A2: SK1 (member_name, member_address, dinner_id, food_code)
+    SK2 (member_id, member_name)
+
+    CK1 from SK1 (member_name, member_address)
+    CK2 from SK1 (member_name, food_code)
+    CK3 from SK2 (member_id)
+
+Q3: What are the potential relationships between different possible tables ?
+A3: I would also suggest separatting the table into 4 tables (Invitees, Dinner_details, Food_details & Attendies_details(Mix of all tables) )
+    
+    Invitees Columns
+    member_id | member_name   | member_address 
+
+    Dinner_details (dinner_id & venue_code are redundant and one of them should be deleted)
+    dinner_id | dinner_date | venue_code | venue_description
+
+    Food_details
+    food_code | food_description 
+    
+    Attendies_details
+    member_id | dinner_id | food_code
+
+Q4: How can you develop the set of 2NF tables?
+A4: using the answer from A3, all columns now relate to their primary keys
+
+Q5: How can you develop the set of 3NF tables?
+A5: Using the answer from A3, since we separated the tables we have no dependencies and the error is reduced. 
+    every table should be updated incase of changes. 
+
+
+
