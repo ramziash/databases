@@ -28,16 +28,19 @@ A2: SK1 (member_name, member_address, dinner_id, food_code)
     CK3 from SK2 (member_id)
 
 Q3: What are the potential relationships between different possible tables ?
-A3: I would also suggest separatting the table into 4 tables (Invitees, Dinner_details, Food_details & Attendies_details(Mix of all tables) )
+A3: I would also suggest separatting the table into 5 tables (Invitees, Dinner_details, Venue_details, Food_details & Attendies_details(Mix of all tables) )
     
     Invitees Columns
     member_id | member_name   | member_address 
 
-    Dinner_details (dinner_id & venue_code are redundant and one of them should be deleted)
-    dinner_id | dinner_date | venue_code | venue_description
+    Dinner_details 
+    dinner_id | dinner_date 
+
+    Venue_details
+    venue_code | venue_description
 
     Food_details
-    food_code | food_description 
+    food_code | food_description | venue_code | dinner_id
     
     Attendies_details
     member_id | dinner_id | food_code
